@@ -6,7 +6,7 @@ body {
     width: 100vw;
 }
 
-.content{
+#content{
     display: grid;
     grid-template-columns: minmax(150px 1fr) minmax(500px 4fr);
     grid-template-rows: 150px 1fr;
@@ -20,7 +20,7 @@ body {
 
 .sidebar{
     grid-column: 1;
-    grid-row: 1/2;
+    grid-row: 2;
     
 }
 
