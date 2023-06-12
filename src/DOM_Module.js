@@ -1,4 +1,4 @@
-import { createTodo, createProject } from "./TodoLogic_Module";
+import HomeIcon from "./icons/home-outline.svg";
 
 //Creates the basic structure of the page
 function createHomeDOM() {
@@ -28,7 +28,15 @@ function createSidebar(){
         const homeButton = document.createElement("button");
             homeButton.id = "Home";
             homeButton.textContent = "Home";
+            const homeSvg = document.createElement("img");
+                homeSvg.src = HomeIcon;
+            homeButton.appendChild(homeSvg);
         sidebarTop.appendChild(homeButton);
+
+        const projects = document.createElement("div");
+            projects.id = "project";
+        sidebarTop.appendChild(projects);
+
         const newProjectButton = document.createElement("button");
             newProjectButton.id = "newProject"
             newProjectButton.textContent = "+ New Project";
@@ -36,7 +44,7 @@ function createSidebar(){
 
 
     const sidebarBottom = document.createElement("div");
-        sidebarTop.classList.add("sidebar-bottom");
+        sidebarBottom.classList.add("sidebar-bottom");
     sidebar.appendChild(sidebarBottom);
         const settingsButton = document.createElement("button"); 
             settingsButton.textContent = "Settings";
@@ -57,6 +65,10 @@ function displayMain(project) {
     const h1 = document.createElement("h1");
         h1.textContent = project.name;
     main.appendChild(h1);
+
+    const todos = document.createElement("div");
+        todos.classList.add("todos");
+    main.appendChild(todos);
 
     const todoAddButton = document.createElement("button");
         todoAddButton.textContent = "+ Todo";
@@ -98,6 +110,13 @@ function projectForm() {
     main.appendChild(projectForm);
 }
 
+function addProjectToSidebar(project) {
+    const projects = document.querySelector("#project")
+
+    const newProjectButtons = document.createElement("button");
+        newProjectButtons.textContent = `${project.name}`;
+    projects.appendChild(newProjectButtons);
+}
 //Todo Form
 
 
@@ -106,5 +125,6 @@ export {
     createHomeDOM,
     createSidebar,
     displayMain,
-    projectForm
+    projectForm,
+    addProjectToSidebar
 }

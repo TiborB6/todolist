@@ -4,7 +4,8 @@ import {
     createHomeDOM,
     createSidebar,
     displayMain,
-    projectForm
+    projectForm,
+    addProjectToSidebar
 } from "./DOM_Module";
 import {
     createTodo,
@@ -12,17 +13,17 @@ import {
 } from "./TodoLogic_Module"
 
 //handles all projects
-let projectArr = {}; 
+let projectHash = {}; 
 function addToProjectArr(object){
-    projectArr = {projectArr, object}
+    projectHash[`${object.name}`] = object;
 };
 
 //Creates the Home page
-const home = createProject("Task for Today", null);
+const home = createProject("Home", null);
 addToProjectArr(home);
 createHomeDOM();
 createSidebar();
-displayMain(home);
+displayMain(projectHash["Home"]);
 
 //Logic for sidebar buttons
 const homeBtn = document.querySelector("#Home")
@@ -44,11 +45,13 @@ function handleProjectSubmit() {
 
     projectForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const test = createProject(inputName.value, inputDueDate.value);
-        addToProjectArr(test);
-        console.log(projectArr);
-        displayMain(test);
+        addToProjectArr(createProject(inputName.value, inputDueDate.value));
+        console.table(projectHash);
+        displayMain(projectHash[inputName.value]);
+        addProjectToSidebar(projectHash[inputName.value]); 
     }) 
 }
+
+//Handle Todo Submit
 
 
