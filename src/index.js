@@ -5,11 +5,14 @@ import {
     createSidebar,
     displayMain,
     projectForm,
-    addProjectToSidebar
+    addProjectToSidebar,
+    todoForm,
+    domTodos
 } from "./DOM_Module";
 import {
     createTodo,
-    createProject
+    createProject,
+    sortProjectTodos
 } from "./TodoLogic_Module"
 
 //handles all projects
@@ -18,26 +21,57 @@ function addToProjectArr(object){
     projectHash[`${object.name}`] = object;
 };
 
-//Creates the Home page
+
 const home = createProject("Home", null);
 addToProjectArr(home);
 createHomeDOM();
 createSidebar();
 displayMain(projectHash["Home"]);
+addTodoListener();
+let currentProject = home;
 
-//Logic for sidebar buttons
+
 const homeBtn = document.querySelector("#Home")
-homeBtn.addEventListener("click", () => {
+    homeBtn.addEventListener("click", () => {
     displayMain(home);
 });
 
 const newProject = document.querySelector("#newProject");
-newProject.addEventListener("click", (e) => {
+newProject.addEventListener("click", () => {
     projectForm();
     handleProjectSubmit();
 })
 
-//Handle Porject Submit
+function displayTodos(currentProject) {
+    const sortedArr = sortProjectTodos(currentProject.todos);
+    domTodos(sortedArr);
+}
+
+function addTodoListener(){
+        const todoButton = document.querySelector("#todo-button");
+        todoButton.addEventListener("click", () => {
+            todoForm();
+            handleTodoSubmit(currentProject);
+    })
+}
+
+function addEventListenersToSidebar() {
+    function handleClick(id) {
+        displayMain(projectHash[id]);
+        displayTodos(projectHash[id]);
+        addTodoListener();
+        currentProject = id;
+    
+    }
+
+    const projectButtons = document.querySelectorAll("#project > button");
+
+    projectButtons.forEach(button => {
+        button.removeEventListener("click", () => handleClick(button.id));
+        button.addEventListener("click", () => handleClick(button.id));
+    });
+}
+
 function handleProjectSubmit() {
     const inputName = document.querySelector("#name");
     const inputDueDate = document.querySelector("#due-date");
@@ -45,13 +79,41 @@ function handleProjectSubmit() {
 
     projectForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        addToProjectArr(createProject(inputName.value, inputDueDate.value));
+        const newProject = createProject(inputName.value, inputDueDate.value);
+        addToProjectArr(newProject);
         console.table(projectHash);
-        displayMain(projectHash[inputName.value]);
-        addProjectToSidebar(projectHash[inputName.value]); 
+        displayMain(newProject);
+        addProjectToSidebar(newProject); 
+        addEventListenersToSidebar();
+        addTodoListener();
+        currentProject = newProject;
     }) 
 }
 
-//Handle Todo Submit
+function handleTodoSubmit(project) {
+    const todoForm = document.querySelector("#todo-form");
+    const name = document.querySelector("#name");
+    const priorityInputs = document.querySelectorAll('input[name="priority"]');
+    const dueDate = document.querySelector("#due-date");
+    const startDate = document.querySelector("#start-date");
+    const description = document.querySelector("#description");
 
+    todoForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let priorityValue;
+        for (const input of priorityInputs) {
+            if (input.checked) {
+                priorityValue = parseInt(input.value);
+                break;
+            }
+        }
+        const newTodo = createTodo(name.value, priorityValue, dueDate.value, startDate.value, description.value)
+        project.todos.push(newTodo);
+        console.table(project);
+        displayMain(project);
+        displayTodos(project);
+        addTodoListener();
+    })
+
+} 
 

@@ -55,10 +55,6 @@ function createSidebar(){
 }
 
 //Logic for Main Display 
-function displayTodo(todo) {
-
-}
-
 function displayMain(project) {
     const main = document.querySelector(".main-page");
     main.innerHTML = "";
@@ -71,8 +67,32 @@ function displayMain(project) {
     main.appendChild(todos);
 
     const todoAddButton = document.createElement("button");
-        todoAddButton.textContent = "+ Todo";
+        todoAddButton.id = "todo-button";
+        todoAddButton.textContent = "+ Add Todo";
     main.appendChild(todoAddButton);
+}
+
+function domTodos(arr){
+    const todos = document.querySelector(".todos");
+
+    for (let i = 0; i < arr.length; i++) {
+        const todo = document.createElement("div");
+        todo.classList.add("todo");
+            const name = document.createElement("p");
+                name.textContent = arr[i].name;
+            todo.appendChild(name);
+            const dueDate = document.createElement("p");
+                dueDate.textContent = arr[i].dueDate;
+            todo.appendChild(dueDate);
+            const startDate = document.createElement("p");
+                startDate.textContent = arr[i].startDate;
+            todo.appendChild(startDate);
+            const description = document.createElement("p");
+                description.textContent = arr[i].description;
+            todo.appendChild(description);
+        todos.appendChild(todo);
+    };
+
 }
 
 //Project Form
@@ -92,6 +112,7 @@ function projectForm() {
     projectForm.appendChild(nameLabel);
 
     const dueDate = document.createElement("input");
+        dueDate.type = "date";
         dueDate.id = "due-date";
         dueDate.value = "";
         const dueDateLabel = document.createElement("label");
@@ -115,10 +136,82 @@ function addProjectToSidebar(project) {
 
     const newProjectButtons = document.createElement("button");
         newProjectButtons.textContent = `${project.name}`;
+        newProjectButtons.id = `${project.name}`;
     projects.appendChild(newProjectButtons);
 }
-//Todo Form
 
+
+//Todo Form
+function todoForm() {
+    const main = document.querySelector(".main-page");
+    main.innerHTML = "";
+
+    const todoForm = document.createElement("form");
+    todoForm.method = "#";
+    todoForm.id = "todo-form";
+
+    const name = document.createElement("input");
+        name.id = "name";
+        name.value = "";
+        const nameLabel = document.createElement("label");
+            nameLabel.setAttribute("for", "name");
+            nameLabel.textContent = "Todo Name";
+    todoForm.appendChild(name);
+    todoForm.appendChild(nameLabel);
+
+    const fieldset = document.createElement("fieldset");
+    const legend = document.createElement("legend");
+    legend.textContent = "Priority";
+    for (let i = 0; i < 10; i++) {
+        const inputElement = document.createElement('input');
+        const label = document.createElement("label");
+        inputElement.type = 'radio';
+        inputElement.name = 'priority';
+        inputElement.value = i + 1;
+        inputElement.id = `priority-${i + 1}`;
+        label.textContent = `${i + 1}`;
+        label.setAttribute("for", `priority-${i + 1}`);
+        fieldset.appendChild(label);
+        fieldset.appendChild(inputElement);
+    }
+    fieldset.appendChild(legend);
+    todoForm.appendChild(fieldset);
+
+    const dueDate = document.createElement("input");
+    dueDate.type = "date";
+    dueDate.id = "due-date";
+    dueDate.value = "";
+    const dueDateLabel = document.createElement("label");
+        dueDateLabel.setAttribute("for", "dueDate");
+        dueDateLabel.textContent = "due Date"
+    todoForm.appendChild(dueDate);
+    todoForm.appendChild(dueDateLabel);
+
+    const startDate = document.createElement("input");
+    startDate.type = "date";
+    startDate.id = "start-date";
+    startDate.value = "";
+    const startDateLabel = document.createElement("label");
+        startDateLabel.setAttribute("for", "dueDate");
+        startDateLabel.textContent = "due Date"
+    todoForm.appendChild(startDate);
+    todoForm.appendChild(startDateLabel);
+
+    const description = document.createElement("input");
+        description.type = "text";
+        description.value = "";
+        description.placeholder = "description";
+        description.id = "description"
+    todoForm.appendChild(description);
+
+    const submit = document.createElement("button");
+        submit.id = "project-submit";
+        submit.type = "submit";
+        submit.textContent = "Create Todo";
+    todoForm.appendChild(submit);
+
+    main.appendChild(todoForm);
+}
 
 
 export {
@@ -126,5 +219,7 @@ export {
     createSidebar,
     displayMain,
     projectForm,
-    addProjectToSidebar
+    addProjectToSidebar,
+    todoForm,
+    domTodos
 }

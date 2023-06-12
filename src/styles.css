@@ -1,3 +1,4 @@
+/* Main functions */
 :root{
     font-family: Roboto, Arial, Helvetica, sans-serif;
     --accent-color: #10b981;
@@ -16,6 +17,13 @@ body {
 
 }
 
+button:hover {
+    transition: 0.5;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* Everything header */
 .header{
     grid-column: 1/ -1;
     grid-row: 1;
@@ -31,7 +39,8 @@ body {
     font-weight: bold;
 
     background-color: var(--accent-color);
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 2;
 }
 
 .sidebar{
@@ -45,8 +54,11 @@ body {
     justify-content: space-between;
     
     background-color: #020617;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1;
 }
 
+/* Sidebar */
 .sidebar > div{
     display: flex;
     flex-direction: column;
@@ -55,13 +67,15 @@ body {
     display: grid;
     place-items: center;
     padding: 30px;
-    gap: 15px
+    gap: 15px;
+
 }
 
 #project {
     width: 100%;
     display: grid;
     place-items: center;
+    gap: 5px;
 }
 
 .sidebar-top > button,
@@ -95,9 +109,46 @@ body {
     width: auto;
 }
 
+/* Main Page */
 .main-page{
     grid-column: 2;
     grid-row: 2;
 
     background-color: var(--secondary-color);
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 30px;
 }
+
+#todo-form,
+#project-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.main-page > h1 {
+    margin: 0;
+    text-transform: uppercase;
+}
+
+
+#project-submit,
+#todo-button{
+    background-color: var(--accent-color);
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: var(--main-color);
+    color: var(--main-color);
+
+    height: 50px;
+    width: 150px;
+
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
