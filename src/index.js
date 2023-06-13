@@ -21,7 +21,7 @@ function addToProjectArr(object){
     projectHash[`${object.name}`] = object;
 };
 
-
+//creates home page to work with
 const home = createProject("Home", null);
 addToProjectArr(home);
 createHomeDOM();
@@ -30,7 +30,7 @@ displayMain(projectHash["Home"]);
 addTodoListener();
 let currentProject = home;
 
-
+//add logic to the sidebar buttons
 const homeBtn = document.querySelector("#Home")
     homeBtn.addEventListener("click", () => {
     displayMain(home);
@@ -42,11 +42,13 @@ newProject.addEventListener("click", () => {
     handleProjectSubmit();
 })
 
+//displays sorted todos on the current page
 function displayTodos(currentProject) {
     const sortedArr = sortProjectTodos(currentProject.todos);
     domTodos(sortedArr);
 }
 
+//Event listener 
 function addTodoListener(){
         const todoButton = document.querySelector("#todo-button");
         todoButton.addEventListener("click", () => {
@@ -72,6 +74,7 @@ function addEventListenersToSidebar() {
     });
 }
 
+// Sumbits
 function handleProjectSubmit() {
     const inputName = document.querySelector("#name");
     const inputDueDate = document.querySelector("#due-date");

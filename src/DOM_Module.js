@@ -1,7 +1,7 @@
 import HomeIcon from "./icons/home-outline.svg";
 
-//Creates the basic structure of the page
-function createHomeDOM() {
+
+function createHomeDOM() {//creates base grid and header 
     const content = document.querySelector("#content");
     const header = document.createElement("div");
         header.classList.add("header");
@@ -19,7 +19,8 @@ function createHomeDOM() {
     content.appendChild(mainPage);    
 }
 
-function createSidebar(){
+
+function createSidebar(){//creates Sidabar base
     const sidebar = document.querySelector(".sidebar");
     
     const sidebarTop = document.createElement("div");
@@ -54,7 +55,7 @@ function createSidebar(){
         sidebarBottom.appendChild(impressumButton);
 }
 
-//Logic for Main Display 
+//displays the main page
 function displayMain(project) {
     const main = document.querySelector(".main-page");
     main.innerHTML = "";
@@ -72,6 +73,7 @@ function displayMain(project) {
     main.appendChild(todoAddButton);
 }
 
+// add current todos from the project
 function domTodos(arr){
     const todos = document.querySelector(".todos");
 
@@ -95,8 +97,8 @@ function domTodos(arr){
 
 }
 
-//Project Form
-function projectForm() {
+
+function projectForm() {//add form for project
     const main = document.querySelector(".main-page");
     main.innerHTML = "";
     const projectForm = document.createElement("form");
@@ -131,7 +133,7 @@ function projectForm() {
     main.appendChild(projectForm);
 }
 
-function addProjectToSidebar(project) {
+function addProjectToSidebar(project) {//Adds new project to the sidebar
     const projects = document.querySelector("#project")
 
     const newProjectButtons = document.createElement("button");
@@ -141,8 +143,8 @@ function addProjectToSidebar(project) {
 }
 
 
-//Todo Form
-function todoForm() {
+
+function todoForm() {// creates form on main to enter todo
     const main = document.querySelector(".main-page");
     main.innerHTML = "";
 
